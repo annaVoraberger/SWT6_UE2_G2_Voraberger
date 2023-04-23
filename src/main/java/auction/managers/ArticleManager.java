@@ -113,7 +113,7 @@ public class ArticleManager {
       return false;
     }
     try {
-      TransactionsUtil.execute(em -> {em.merge(article); em.remove(article);});
+      TransactionsUtil.execute(em -> {em.remove(em.contains(article) ? article : em.merge(article));});
       return true;
     } catch (Exception e) {
       e.printStackTrace();

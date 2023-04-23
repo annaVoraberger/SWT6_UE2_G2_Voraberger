@@ -252,11 +252,289 @@ Code identisch zur Übung.
 
 ## ArticleManager
 
+```java
+@NoArgsConstructor
+public class ArticleManager {
 
+  public Article getArticleById(Long id){
+    if (id == null) return null;
+    var result = TransactionsUtil.executeTaskWithResult(em ->{
+      var query = em.createQuery("select a from Article a where id = :id",Article.class);
+      query.setParameter("id",  id);
+      return query.getSingleResult();
+    });
+    return result;
+  }
+
+  public List<Article> getArticles(){
+    var result = TransactionsUtil.executeTaskWithResult(em ->{
+      var query = em.createQuery("select a from Article a",Article.class);
+      return query.getResultList();
+    });
+    return result;
+  }
+
+  public List<Article> getArticlesMaxReservePrice(Double maxReservePrice){
+    if(maxReservePrice == null || maxReservePrice < 0){
+      return new ArrayList<>();
+    }
+    var result = TransactionsUtil.executeTaskWithResult(em ->{
+      var query = em.createQuery("select a from Article a where reservePrice <= :max",Article.class);
+      query.setParameter("max",  maxReservePrice);
+      return query.getResultList();
+    });
+    return result;
+  }
+
+  public List<Article> getArticlesMaxReservePriceInOrder(Double maxReservePrice, ArticleOrder order){
+    final var max = (maxReservePrice != null && maxReservePrice > 0) ? maxReservePrice : Double.MAX_VALUE;
+    switch (order) {
+      case NAME: {
+        var result = TransactionsUtil.executeTaskWithResult(em -> {
+          var query = em.createQuery("select a from Article a where reservePrice <= :max order by name", Article.class);
+          query.setParameter("max", max);
+          return query.getResultList();
+        });// Transaction end
+        return result;
+      }
+      case HAMMER_PRICE: {
+        var result = TransactionsUtil.executeTaskWithResult(em -> {
+          var query = em.createQuery("select a from Article a where reservePrice <= :max order by hammerPrice desc", Article.class);
+          query.setParameter("max", max);
+          return query.getResultList();
+        });// Transaction end
+        return result;
+      }
+      case AUCTION_START_DATE: {
+        var result = TransactionsUtil.executeTaskWithResult(em -> {
+          var query = em.createQuery("select a from Article a where reservePrice <= :max order by auctionStartDate desc", Article.class);
+          query.setParameter("max", max);
+          return query.getResultList();
+        });// Transaction end
+        return result;
+      }
+      case RESERVE_PRICE: {
+        var result = TransactionsUtil.executeTaskWithResult(em -> {
+          var query = em.createQuery("select a from Article a where reservePrice <= :max order by reservePrice desc", Article.class);
+          query.setParameter("max", max);
+          return query.getResultList();
+        });// Transaction end
+        return result;
+      }
+    }
+    var result = TransactionsUtil.executeTaskWithResult(em -> {
+      var query = em.createQuery("select a from Article a where reservePrice <= :max", Article.class);
+      query.setParameter("max", max);
+      return query.getResultList();
+    });// Transaction end
+    return result;
+  }
+
+  public boolean insert(Article article){
+    try {
+      TransactionsUtil.execute(em -> {em.persist(article);});
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+  public boolean update(Article article){
+    if (article == null || getArticleById(article.getId()) == null){
+      return false;
+    }
+    try {
+      TransactionsUtil.execute(em -> {em.merge(article);});
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+  public boolean delete(Article article){
+    if (article == null || getArticleById(article.getId()) == null){
+      return false;
+    }
+    try {
+      TransactionsUtil.execute(em -> {em.remove(em.contains(article) ? article : em.merge(article));});
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+
+  }
+
+}
+```
 
 ### Tests
 
 <img src="./doc/DummyData.png" width=800>
+
+```java
+
+public class ArticleManagerTest {
+
+  static ArticleManager articleManager = new ArticleManager();
+
+  @BeforeClass
+  public static void init(){
+    TransactionsUtil.getEntityManagerFactory();
+  }
+
+
+  @AfterClass
+  public static void cleanup(){
+    TransactionsUtil.closeEntityManagerFactory();
+  }
+
+  @Test
+  public void getArticleById_returnsCorrectArticle(){
+
+    Article article = articleManager.getArticleById((long)1);
+    Assert.assertEquals(article.getId(), (long)1);
+  }
+
+  @Test
+  public void getArticles_returnsAllArticles(){
+    List<Article> articles = articleManager.getArticles();
+    Assert.assertEquals(articles.size(), 6); //TODO
+
+  }
+  /*
+  // Successful with empty DB
+  @Test
+  public void getArticles_EmptyDataBase_returnsEmptyList(){
+    List<Article> articles = articleManager.getArticles();
+    Assert.assertEquals(articles.size(), 0); //TODO
+  }*/
+
+  @Test
+  public void getArticlesMaxReservePrice_returnsCorrectArticles() {
+    List<Article> articles = articleManager.getArticlesMaxReservePrice(100.0);
+    Assert.assertEquals(articles.size(), 3); //TODO
+    Assert.assertTrue(articles.get(0).getReservePrice()<=100.0);
+  }
+
+  @Test
+  public void getArticlesMaxReservePrice_MaxReservePriceZero_ReturnsEmptyList(){
+    List<Article> articles = articleManager.getArticlesMaxReservePrice(0.0);
+    Assert.assertEquals(articles.size(), 0);
+  }
+
+  @Test
+  public void getArticlesMaxReservePrice_MaxReservePriceNull_ReturnsEmptyList(){
+    List<Article> articles = articleManager.getArticlesMaxReservePrice(null);
+    Assert.assertEquals(articles.size(), 0);
+  }
+
+  @Test
+  public void getArticlesMaxReservePriceInOrder_NameOrder_ReturnsCorrectList(){
+    List<Article> articles = articleManager.getArticlesMaxReservePriceInOrder(100.0, ArticleOrder.NAME);
+    Assert.assertEquals(articles.get(0).getName(), "AName");
+    Assert.assertEquals(articles.get(2).getName(), "ZName");
+  }
+
+  @Test
+  public void getArticlesMaxReservePriceInOrder_ReservePriceOrder_ReturnsCorrectList(){
+    List<Article> articles = articleManager.getArticlesMaxReservePriceInOrder(100.0, ArticleOrder.RESERVE_PRICE);
+    Assert.assertEquals(articles.get(0).getReservePrice(), 100.0);
+    Assert.assertEquals(articles.get(2).getReservePrice(), 58.0);
+  }
+
+  @Test
+  public void getArticlesMaxReservePriceInOrder_HammerPrice_ReturnsCorrectList(){
+    List<Article> articles = articleManager.getArticlesMaxReservePriceInOrder(100.0, ArticleOrder.HAMMER_PRICE);
+    Assert.assertEquals(articles.get(0).getHammerPrice(), 900.2);
+    Assert.assertEquals(articles.get(2).getHammerPrice(), 110.0);
+  }
+
+  @Test
+  public void getArticlesMaxReservePriceInOrder_AuctionStartDate_ReturnsCorrectList(){
+    List<Article> articles = articleManager.getArticlesMaxReservePriceInOrder(100.0, ArticleOrder.AUCTION_START_DATE);
+    Assert.assertEquals(articles.get(0).getAuctionStartDate(), LocalDate.of(2022, 9,26));
+    Assert.assertEquals(articles.get(2).getAuctionStartDate(), LocalDate.of(2019,4,26));
+  }
+
+  @Test
+  public void getArticlesMaxReservePriceInOrder_MaxReservePriceZeroOrNull_ReturnsFullOrderedList(){
+    List<Article> articles_1 = articleManager.getArticlesMaxReservePriceInOrder(0.0, ArticleOrder.NAME);
+    List<Article> articles_2 = articleManager.getArticlesMaxReservePriceInOrder(null, ArticleOrder.NAME);
+    Assert.assertEquals(articles_1.get(0).getName(), "AName");
+    Assert.assertEquals(articles_2.get(0).getName(), "AName");
+  }
+
+  @Test
+  public void insert_correctArticle_ReturnsTrue(){
+    Article article = new Article();
+    Long id = article.getId();
+    article.setName("name");
+    article.setAuctionStartDate( LocalDate.of(2023,01,01));
+    article.setReservePrice(50.0);
+    article.setDescription("description");
+
+    Assert.assertTrue(articleManager.insert(article));
+    articleManager.delete(article);
+  }
+
+  @Test
+  public void insert_null_ReturnsFalse(){
+    Assert.assertFalse(articleManager.insert(null));
+  }
+
+  @Test
+  public void insert_alreadyExistingArticle_ReturnsFalse(){
+    Assert.assertFalse(articleManager.insert(null));
+  }
+
+  @Test
+  public void update_correctArticle_UpdatesArticleAndReturnsTrue(){
+    Article article = articleManager.getArticleById((long)1);
+    String oldName = article.getName();
+    article.setName("theNewName");
+
+    Assert.assertTrue(articleManager.update(article));
+
+    Assert.assertEquals(articleManager.getArticleById((long)1).getName(), "theNewName");
+    Assert.assertNotEquals(articleManager.getArticleById((long)1).getName(), oldName);
+
+    article.setName(oldName);
+    articleManager.update(article);
+    Assert.assertEquals(articleManager.getArticleById((long)1).getName(), oldName);
+  }
+
+  @Test
+  public void update_null_ReturnsFalse(){
+    Assert.assertFalse(articleManager.update(null));
+  }
+
+  @Test
+  public void update_ArticleDoesNotExist_ReturnsFalse(){
+    Article article = new Article();
+    Assert.assertFalse(articleManager.update(article));
+  }
+
+  @Test
+  public void delete_validArticle_ReturnsTrueAndDeletesArticle(){
+    Article article = articleManager.getArticleById((long)1);
+    Assert.assertTrue(articleManager.delete(article));
+    articleManager.insert(article);
+  }
+
+  @Test
+  public void delete_ArticleDoesNotExist_ReturnsFalse(){
+    Article article = new Article();
+    Assert.assertFalse(articleManager.delete(article));
+  } 
+
+
+
+  }
+
+```
 
 ## BidManager
 

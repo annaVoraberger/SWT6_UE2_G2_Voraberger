@@ -42,6 +42,15 @@ public class Article {
   @ManyToOne
   private Customer seller;
 
+  public Article(Long id, String name, String description, Double reservePrice, Double hammerPrice, LocalDate auctionStartDate) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.reservePrice = reservePrice;
+    this.hammerPrice = hammerPrice;
+    this.auctionStartDate = auctionStartDate;
+  }
+
 
   public void addBid(Bid bid){
     if (bid.getArticle() != null){

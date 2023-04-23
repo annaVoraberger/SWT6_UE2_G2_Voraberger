@@ -31,8 +31,14 @@ public class Article {
 
   private Date auctionEndDate;
 
-  @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
+  @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private Set<Bid> bids = new HashSet<>();
 
   private ArticleStatus status;
+
+  @ManyToOne
+  private Customer buyer;
+
+  @ManyToOne
+  private Customer seller;
 }

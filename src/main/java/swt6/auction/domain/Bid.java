@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Getter
 @Setter
@@ -18,8 +20,14 @@ public class Bid {
   @GeneratedValue
   private Long id;
 
+  private Double bid;
+
+  private Date date;
+
   @ManyToOne
   private Article article;
 
+  @ManyToOne
+  private Customer bidder;
 
 }

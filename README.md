@@ -1,8 +1,11 @@
 # Übung 2 - Auktionsbackend
 Anna Voraberger | S2010307040
-Aufwand: 15:00-16:30
-17:45-18:45
-09:00 - 10:30
+Aufwand: 13 h
+Noch offen: ca. 5 h Arbeit, wird noch verlässlich nachgeholt.
+
+Bin leider aus Zeitgründen noch nicht fertig geworden - mache die Aufgabe aber noch fertig und committe sie ins Github.
+Status zum Zeitpunkt der Abgabe: DB-Struktur mit Mapping + Doku vorhanden. Article und Tests implementiert. Insight-Methoden und Signatur für die Tests angelegt.
+
 
 # Domänenmodell | ER-Model
 ## ER Model
@@ -35,12 +38,20 @@ public class Customer {
   private String eMail;
 
   @Embedded
+  @AttributeOverride(name = "street", column = @Column(name = "payA_street"))
+  @AttributeOverride(name = "houseNr", column = @Column(name = "payA_houseNr"))
+  @AttributeOverride(name = "zipCode", column = @Column(name = "payA_zipCode"))
+  @AttributeOverride(name = "town", column = @Column(name = "payA_town"))
   private Address paymentAddress;
 
   @Embedded
+  @AttributeOverride(name = "street", column = @Column(name = "shipA_street"))
+  @AttributeOverride(name = "houseNr", column = @Column(name = "shipA_houseNr"))
+  @AttributeOverride(name = "zipCode", column = @Column(name = "shipA_zipCode"))
+  @AttributeOverride(name = "town", column = @Column(name = "shipA_town"))
   private Address shippingAddress;
 
-  @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<PaymentOption> paymentOptions = new HashSet<>();
 
   @OneToMany(mappedBy = "seller", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -51,11 +62,11 @@ public class Customer {
 
   @OneToMany(mappedBy = "bidder", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   private Set<Bid> bids = new HashSet<>();
-}
+
 ```
 ### Relationships
 Der Customer hat sowohl eine eingebettete payment als auch shipping Address.
-Diese Klasse ist auch die owner-Klasse für die Beziehungen zu den PaymentOptions, den bids, boughtArticles und den soldArticles, da es sich jeweils um 1:N Beziehungen handelt.
+Diese Klasse ist auch die owner-Klasse für die Beziehungen zu den PaymentOptions, den bids, boughtArticles und den soldArticles, da es sich jeweils um 1:N Beziehungen handelt. In diesem Fall müssen auch die Adressspalten neu benannt werden, da diese bei den beiden Adressen sonst identisch wären, was nicht möglich ist.
 
 Die Cascadetypes wurden so gewählt dass Articles nicht notwendigerweise abhängig vom Customer existieren, da immer 2 dranhängen. Gibt es den seller oder buyer nicht mehr, soll der Article nicht gelöscht werden - daher kein ```Cascade.REMOVE``` und kein Orphanremoval.
 
@@ -220,5 +231,37 @@ public class Bid {
 
 In der Bid sind nur noch die "non-owning" seiten der Beziehungen zu article und bidder zusätzlich zu den Bidding-Infos wie Preis und Datum angelegt.
 
+## Korrektes Mapping
+Durch die Annotationen wurde auch meinem ER Diagramm entsprechend gemappt.
 
- 
+<img src="./doc/ArticleMapping.png" width=400>
+<img src="./doc/Payment_Bid_Mapping.png" width=400>
+<img src="./doc/Customer_Payment_Mapping.png" width=400>
+
+# Data Access Layer
+Auf dieser Ebene liegen alle DAOs, die die Artikel, Bids, Customers und PaymentOptions managen.
+
+## TransactionsUtil
+Die Transaktionslogik habe ich wie in der Übung herausfaktoriert und stelle im TransactionsUtil die Entitymanager Factory zur Verfügung bzw. mit dem EntityManager Task und EntityManagerTaskWithResult gleich die executes, die mit der Factory (die einmal anfangs erstellt wird) einen EntityManager erzeugen und den Task ausführen.
+
+Code identisch zur Übung.
+
+## CustomerManager
+
+## PaymentOptionManager
+
+## ArticleManager
+
+
+
+### Tests
+
+<img src="./doc/DummyData.png" width=800>
+
+## BidManager
+
+## Data Access Layer | Integration Tests
+
+# Insights
+
+## InsightsTests

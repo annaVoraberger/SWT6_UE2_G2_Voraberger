@@ -108,18 +108,23 @@ public class ArticleManager {
     }
   }
 
+
+
   public boolean delete(Article article){
-    if (article == null || getArticleById(article.getId()) == null){
+    if (article == null){
       return false;
     }
     try {
-      TransactionsUtil.execute(em -> {em.remove(em.contains(article) ? article : em.merge(article));});
+      TransactionsUtil.execute(em -> {
+        var query = em.createQuery("delete from Article a where a.id = :id", Article.class);
+        query.setParameter("id", article.getId());
+        query.executeUpdate();
+      });
       return true;
     } catch (Exception e) {
       e.printStackTrace();
       return false;
     }
-
   }
 
 }

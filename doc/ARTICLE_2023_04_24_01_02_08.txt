@@ -1,0 +1,5 @@
+1: The statement was aborted because it would have caused a duplicate key value in a unique or primary key constraint or unique index identified by 'SQL0000000081-789c8155-0187-b050-3b99-000054b352f1' defined on 'ARTICLE'.
+2: The statement was aborted because it would have caused a duplicate key value in a unique or primary key constraint or unique index identified by 'SQL0000000081-789c8155-0187-b050-3b99-000054b352f1' defined on 'ARTICLE'.
+3: The statement was aborted because it would have caused a duplicate key value in a unique or primary key constraint or unique index identified by 'SQL0000000081-789c8155-0187-b050-3b99-000054b352f1' defined on 'ARTICLE'.
+4: The statement was aborted because it would have caused a duplicate key value in a unique or primary key constraint or unique index identified by 'SQL0000000081-789c8155-0187-b050-3b99-000054b352f1' defined on 'ARTICLE'.
+5: The statement was aborted because it would have caused a duplicate key value in a unique or primary key constraint or unique index identified by 'SQL0000000081-789c8155-0187-b050-3b99-000054b352f1' defined on 'ARTICLE'.

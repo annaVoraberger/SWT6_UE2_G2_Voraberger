@@ -1,5 +1,7 @@
 import net.bytebuddy.asm.Advice;
+import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.runners.MethodSorters;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ArticleManagerTest {
 
   static ArticleManager articleManager = new ArticleManager();
@@ -22,19 +25,6 @@ public class ArticleManagerTest {
   @BeforeClass
   public static void init(){
     TransactionsUtil.getEntityManagerFactory();
-    /*articleManager.insert(new Article(
-            (long)1, "DName", "abc", 100.0, 110.0,LocalDate.of(2019,04,26)));
-    articleManager.insert(new Article(
-            (long)2, "EName", "def", 240.1, 840.5,LocalDate.of(2000,01,01)));
-    articleManager.insert(new Article(
-            (long)3, "CName", "ghi", 105.0, 209.2,LocalDate.of(2023,01,01)));
-    articleManager.insert(new Article(
-            (long)4, "ZName", "jkl",  58.0, 305.0,LocalDate.of(2022,05,15)));
-    articleManager.insert(new Article(
-            (long)5, "AName", "mno", 62.78, 900.2,LocalDate.of(2022,9,26)));
-    articleManager.insert(new Article(
-            (long)5, "BName", "pqr", 580.2, 600.2,LocalDate.of(2008,11,30)));
-*/
   }
 
 
@@ -45,7 +35,6 @@ public class ArticleManagerTest {
 
   @Test
   public void getArticleById_returnsCorrectArticle(){
-
     Article article = articleManager.getArticleById((long)1);
     Assert.assertEquals(article.getId(), (long)1);
   }
@@ -170,8 +159,8 @@ public class ArticleManagerTest {
   }
 
   @Test
-  public void delete_validArticle_ReturnsTrueAndDeletesArticle(){
-    Article article = articleManager.getArticleById((long)1);
+  public void Z_delete_validArticle_ReturnsTrueAndDeletesArticle(){
+    Article article = new Article((long)1,"DName", "abc", 100.0, 110.0, LocalDate.of(2019,04,26));
     Assert.assertTrue(articleManager.delete(article));
     articleManager.insert(article);
   }

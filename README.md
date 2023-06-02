@@ -435,6 +435,9 @@ public class Customer {
 
 ```
 
+Um die Implementierung rein von UI Seite zu demonstrieren, hier ein Screenshot der Login page:
+<img src="./doc/LoginScreen.png">
+
 ### Relationships
 Der Customer hat sowohl eine eingebettete payment als auch shipping Address.
 Diese Klasse ist auch die owner-Klasse für die Beziehungen zu den PaymentOptions, den bids, boughtArticles und den soldArticles, da es sich jeweils um 1:N Beziehungen handelt. In diesem Fall müssen auch die Adressspalten neu benannt werden, da diese bei den beiden Adressen sonst identisch wären, was nicht möglich ist.

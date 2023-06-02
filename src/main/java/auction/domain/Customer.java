@@ -50,6 +50,12 @@ public class Customer {
   @OneToMany(mappedBy = "bidder", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   private Set<Bid> bids = new HashSet<>();
 
+  public Customer(String firstname, String lastname, String eMail) {
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.eMail = eMail;
+  }
+
 
   public void addPaymentOption(PaymentOption paymentOption){
     if (paymentOption.getOwner() != null){

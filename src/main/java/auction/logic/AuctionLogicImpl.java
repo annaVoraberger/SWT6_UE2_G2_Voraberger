@@ -45,6 +45,11 @@ public class AuctionLogicImpl implements AuctionLogic{
   }
 
   @Override
+  public boolean addArticle(Article article) {
+    return articleMan.insert(article);
+  }
+
+  @Override
   public boolean addBid(Bid bid, Long customerId, Long articleId) {
     Optional<Customer> optionalCustomer = customerMan.getCustomerById(customerId);
     if (optionalCustomer.isEmpty()) return false;

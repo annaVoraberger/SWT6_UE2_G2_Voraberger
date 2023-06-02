@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -41,6 +42,15 @@ public class Article {
 
   @ManyToOne
   private Customer seller;
+
+  public Article(String name, String description, Double reservePrice, LocalDate auctionStartDate) {
+    this.name = name;
+    this.description = description;
+    this.reservePrice = reservePrice;
+    this.auctionStartDate = auctionStartDate;
+  }
+
+
 
   public Article(Long id, String name, String description, Double reservePrice, Double hammerPrice, LocalDate auctionStartDate) {
     this.id = id;

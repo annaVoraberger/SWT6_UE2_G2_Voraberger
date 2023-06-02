@@ -4,7 +4,8 @@ import { AuctionService } from '../shared/auction.service';
 @Component({
   selector: 'auct-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.css']
+  styles: [
+  ]
 })
 export class NavigationComponent implements OnInit {
 

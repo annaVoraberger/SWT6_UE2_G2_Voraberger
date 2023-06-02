@@ -76,7 +76,6 @@ public class AuctionRestController {
     if (logic.addBid(bid, customerId, id)) {
       return ResponseEntity.ok("Bid successfully placed.");
     }
-
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data");
   }
 

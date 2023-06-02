@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -22,7 +23,7 @@ public class Bid {
 
   private Double bid;
 
-  private Date date;
+  private LocalDate date;
 
   @ManyToOne
   private Article article;
@@ -30,4 +31,11 @@ public class Bid {
   @ManyToOne
   private Customer bidder;
 
+
+  public Bid(Double bid, LocalDate date, Article article, Customer bidder) {
+    this.bid = bid;
+    this.date = date;
+    this.article = article;
+    this.bidder = bidder;
+  }
 }

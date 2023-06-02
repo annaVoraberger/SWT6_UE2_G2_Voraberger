@@ -4,6 +4,7 @@
     <data-source source="LOCAL" name="AuctionDb" uuid="2dc9bd96-50e6-42b5-8cd9-b8f01ef32dab">
       <driver-ref>derby.remote</driver-ref>
       <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
       <jdbc-driver>org.apache.derby.jdbc.ClientDriver</jdbc-driver>
       <jdbc-url>jdbc:derby://localhost/AuctionDb;create=true</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>

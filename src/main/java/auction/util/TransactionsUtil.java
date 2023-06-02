@@ -3,8 +3,8 @@ package auction.util;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import auction.managers.EntityManagerTask;
-import auction.managers.EntityManagerTaskWithResult;
+import auction.daos.EntityManagerTask;
+import auction.daos.EntityManagerTaskWithResult;
 
 
 public class TransactionsUtil {

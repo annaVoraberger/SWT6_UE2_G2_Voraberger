@@ -1,0 +1,27 @@
+<auct-navigation></auct-navigation>
+
+
+<h1 class="ui centered header">Login To Auction House</h1>
+<form class="ui large form"
+    [formGroup] = "myForm"
+    (ngSubmit)="submitForm()"
+>
+
+  <div class="field">
+    <label>E-Mail</label>
+    <input
+      name="email"
+      formControlName="email"
+      >
+  </div>
+
+  <div class="field">
+    <label>Passwort</label>
+    <input type="password"
+      name="password"
+      formControlName="password"
+      >
+  </div>
+
+  <button type="submit" [disabled]="myForm.invalid" class="ui button">Login</button>
+</form>

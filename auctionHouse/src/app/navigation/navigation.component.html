@@ -1,0 +1,12 @@
+<div class = "auct-navigation">
+  <div class="ui blue inverted menu">
+    <a routerLink="../overview"  routerLinkActive="active" class="item">Alle Artikel</a>
+    <div class="right menu">
+      <a routerLink="../login" routerLinkActive="active" class="item" *ngIf="!isLoggedIn">Login</a>
+      <a routerLink="../overview" routerLinkActive="active" class="item" *ngIf="isLoggedIn" (click)="logout()">Logout</a>
+    </div>
+  </div>
+</div>
+
+<div class="ui hidden divider"></div>
+<router-outlet></router-outlet>

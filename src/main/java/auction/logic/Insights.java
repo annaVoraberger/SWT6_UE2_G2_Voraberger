@@ -2,9 +2,9 @@ package auction.logic;
 
 import auction.domain.Article;
 import auction.domain.Customer;
-import auction.managers.ArticleManager;
-import auction.managers.BidManager;
-import auction.managers.CustomerManager;
+import auction.daos.ArticleManager;
+import auction.daos.BidManager;
+import auction.daos.CustomerManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +66,7 @@ public class Insights {
   public static Double getArticlePrice(Article Id) throws ArticleNotFoundException {
     //TODO
     if(true){
-      throw new ArticleNotFoundException(Id);
+      throw new ArticleNotFoundException();
     } else return Double.POSITIVE_INFINITY;
   }
 

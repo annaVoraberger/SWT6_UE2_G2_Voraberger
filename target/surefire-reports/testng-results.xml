@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="15" passed="15" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2023-06-02T16:33:02 MESZ" name="Command line suite" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="2600">
+    <groups>
+    </groups>
+    <test started-at="2023-06-02T16:33:02 MESZ" name="Command line test" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="2600">
+      <class name="ArticleManagerTest">
+        <test-method is-config="true" signature="init()[pri:0, instance:ArticleManagerTest@5d47c63f]" started-at="2023-06-02T16:33:02 MESZ" name="init" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="2139" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- init -->
+        <test-method signature="insert_correctArticle_ReturnsTrue()[pri:0, instance:ArticleManagerTest@5d47c63f]" started-at="2023-06-02T16:33:04 MESZ" name="insert_correctArticle_ReturnsTrue" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="172" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- insert_correctArticle_ReturnsTrue -->
+        <test-method is-config="true" signature="cleanup()[pri:0, instance:ArticleManagerTest@5d47c63f]" started-at="2023-06-02T16:33:04 MESZ" name="cleanup" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="4" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- cleanup -->
+      </class> <!-- ArticleManagerTest -->
+      <class name="InsightsTest">
+        <test-method is-config="true" signature="init()[pri:0, instance:InsightsTest@4c6e276e]" started-at="2023-06-02T16:33:04 MESZ" name="init" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="249" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- init -->
+        <test-method signature="findArticlesByDescription_getsJustDescription_returnsCorrectList()[pri:0, instance:InsightsTest@4c6e276e]" started-at="2023-06-02T16:33:04 MESZ" name="findArticlesByDescription_getsJustDescription_returnsCorrectList" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- findArticlesByDescription_getsJustDescription_returnsCorrectList -->
+        <test-method signature="findArticlesByDescription_getsNonexistantDescription_returnsNull()[pri:0, instance:InsightsTest@4c6e276e]" started-at="2023-06-02T16:33:04 MESZ" name="findArticlesByDescription_getsNonexistantDescription_returnsNull" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- findArticlesByDescription_getsNonexistantDescription_returnsNull -->
+        <test-method signature="findArticlesByDescription_getsNonexistantSearchPhraseAndMaxReservePrice_returnsNull()[pri:0, instance:InsightsTest@4c6e276e]" started-at="2023-06-02T16:33:04 MESZ" name="findArticlesByDescription_getsNonexistantSearchPhraseAndMaxReservePrice_returnsNull" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- findArticlesByDescription_getsNonexistantSearchPhraseAndMaxReservePrice_returnsNull -->
+        <test-method signature="findArticlesByDescription_getsNonexistantPhrasePriceAndOrder_TestingAllOrders_returnsNull()[pri:0, instance:InsightsTest@4c6e276e]" started-at="2023-06-02T16:33:04 MESZ" name="findArticlesByDescription_getsNonexistantPhrasePriceAndOrder_TestingAllOrders_returnsNull" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- findArticlesByDescription_getsNonexistantPhrasePriceAndOrder_TestingAllOrders_returnsNull -->
+        <test-method signature="findArticlesByDescription_getsPhrasePriceAndOrder_TestingAllOrders_returnsCorrectLists()[pri:0, instance:InsightsTest@4c6e276e]" started-at="2023-06-02T16:33:04 MESZ" name="findArticlesByDescription_getsPhrasePriceAndOrder_TestingAllOrders_returnsCorrectLists" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- findArticlesByDescription_getsPhrasePriceAndOrder_TestingAllOrders_returnsCorrectLists -->
+        <test-method signature="getArticlePrice_ArticleDoesNotExist_ThrowsArticleNotFoundException()[pri:0, instance:InsightsTest@4c6e276e]" started-at="2023-06-02T16:33:04 MESZ" name="getArticlePrice_ArticleDoesNotExist_ThrowsArticleNotFoundException" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getArticlePrice_ArticleDoesNotExist_ThrowsArticleNotFoundException -->
+        <test-method signature="findArticlesByDescription_getsSearchPhraseAndMaxReservePrice_returnsCorrectList()[pri:0, instance:InsightsTest@4c6e276e]" started-at="2023-06-02T16:33:04 MESZ" name="findArticlesByDescription_getsSearchPhraseAndMaxReservePrice_returnsCorrectList" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- findArticlesByDescription_getsSearchPhraseAndMaxReservePrice_returnsCorrectList -->
+        <test-method signature="getArticlePrice_AuctionEnded_ReturnsHighestHammerPrice()[pri:0, instance:InsightsTest@4c6e276e]" started-at="2023-06-02T16:33:04 MESZ" name="getArticlePrice_AuctionEnded_ReturnsHighestHammerPrice" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getArticlePrice_AuctionEnded_ReturnsHighestHammerPrice -->
+        <test-method signature="getArticlePrice_AuctionRunning_ReturnsHighestBid()[pri:0, instance:InsightsTest@4c6e276e]" started-at="2023-06-02T16:33:04 MESZ" name="getArticlePrice_AuctionRunning_ReturnsHighestBid" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getArticlePrice_AuctionRunning_ReturnsHighestBid -->
+        <test-method signature="getArticlePrice_AuctionOverArticleNotSold_ReturnsNull()[pri:0, instance:InsightsTest@4c6e276e]" started-at="2023-06-02T16:33:04 MESZ" name="getArticlePrice_AuctionOverArticleNotSold_ReturnsNull" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getArticlePrice_AuctionOverArticleNotSold_ReturnsNull -->
+        <test-method signature="getTopArticles_CountInValid_ReturnsEmptyList()[pri:0, instance:InsightsTest@4c6e276e]" started-at="2023-06-02T16:33:04 MESZ" name="getTopArticles_CountInValid_ReturnsEmptyList" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getTopArticles_CountInValid_ReturnsEmptyList -->
+        <test-method signature="getTopSellers_CountInValid_ReturnsEmptyList()[pri:0, instance:InsightsTest@4c6e276e]" started-at="2023-06-02T16:33:04 MESZ" name="getTopSellers_CountInValid_ReturnsEmptyList" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getTopSellers_CountInValid_ReturnsEmptyList -->
+        <test-method signature="getTopArticles_CountValid_ReturnsCountNumberOfTopArticles()[pri:0, instance:InsightsTest@4c6e276e]" started-at="2023-06-02T16:33:04 MESZ" name="getTopArticles_CountValid_ReturnsCountNumberOfTopArticles" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getTopArticles_CountValid_ReturnsCountNumberOfTopArticles -->
+        <test-method signature="getTopSellers_CountValid_ReturnsCountNumberOfTopSellers()[pri:0, instance:InsightsTest@4c6e276e]" started-at="2023-06-02T16:33:04 MESZ" name="getTopSellers_CountValid_ReturnsCountNumberOfTopSellers" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getTopSellers_CountValid_ReturnsCountNumberOfTopSellers -->
+        <test-method is-config="true" signature="cleanup()[pri:0, instance:InsightsTest@4c6e276e]" started-at="2023-06-02T16:33:04 MESZ" name="cleanup" finished-at="2023-06-02T16:33:04 MESZ" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- cleanup -->
+      </class> <!-- InsightsTest -->
+    </test> <!-- Command line test -->
+  </suite> <!-- Command line suite -->
+</testng-results>

@@ -1,0 +1,22 @@
+
+<div class="image">
+  <img [src]="getImageLink()" alt="image of a {{article.name}}">
+</div>
+<div class="content">
+  <div class="header" [routerLink]= "[article.id]">{{ article.id }}</div>
+  <div class="meta">
+    <a>Price: {{ article.highestBid }} €</a>
+  </div>
+  <div class="description">
+    {{ article.description }}
+  </div>
+</div>
+<div class="extra content">
+  <div class="ui tiny input" [formGroup]="myForm">
+    <input type="number" min="0" formControlName="amount">
+  </div>
+  <button class="ui blue button right floated" (click)="placeBid()">
+    <i class="hammer icon"></i>
+    Jetzt Gebot abgeben
+  </button>
+</div>

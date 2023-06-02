@@ -1,12 +1,15 @@
 package auction.logic;
 
-import auction.domain.Article;
-import auction.domain.Customer;
 import auction.daos.ArticleManager;
 import auction.daos.BidManager;
 import auction.daos.CustomerManager;
+import auction.domain.Article;
+import auction.domain.ArticleStatus;
+import auction.domain.Customer;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Insights {
@@ -28,22 +31,25 @@ public class Insights {
    */
   public static List<Article> findArticlesByDescription(String searchPhrase, Double
           maxReservePrice, ArticleOrder order) {
-    //TODO
+
     if (order != null){
       switch (order) {
         case NAME:
-          //do something
+           return findArticlesByDescriptionAndMaxReservePrice(searchPhrase, maxReservePrice)
+                   .stream().sorted(Comparator.comparing(Article::getName)).toList();
         case HAMMER_PRICE:
-          //do
+          return findArticlesByDescriptionAndMaxReservePrice(searchPhrase, maxReservePrice)
+                  .stream().sorted(Comparator.comparingDouble(Article::getHammerPrice)).toList();
         case RESERVE_PRICE:
-          //do
+          return findArticlesByDescriptionAndMaxReservePrice(searchPhrase, maxReservePrice)
+                  .stream().sorted(Comparator.comparingDouble(Article::getReservePrice)).toList();
         case AUCTION_START_DATE:
-          //do
+          return findArticlesByDescriptionAndMaxReservePrice(searchPhrase, maxReservePrice)
+                  .stream().sorted(Comparator.comparing(Article::getAuctionStartDate)).toList();
       }
     } else {
       if (maxReservePrice != null && maxReservePrice < 0){
-        List<Article> articles = findArticlesByDescriptionAndMaxReservePrice(searchPhrase, maxReservePrice);
-        //TODO
+        return findArticlesByDescriptionAndMaxReservePrice(searchPhrase, maxReservePrice);
       }
     }
 
@@ -51,11 +57,13 @@ public class Insights {
   }
 
   private static List<Article> findArticlesByDescriptionAndMaxReservePrice(String searchPhrase, Double maxReservePrice){
-    return new ArrayList<>(); // TODO maxReserveprice definitely given
+    return articleManager.getArticles().stream()
+            .filter(a -> a.getDescription().contains(searchPhrase))
+            .filter(a -> a.getReservePrice()<= maxReservePrice).toList();
   }
 
   /***
-   * @param Id of the Article required
+   * @param id of the Article required
    * @return
    *    null if the Auction was not started yet
    *    null if the Auction is over and the article was not sold
@@ -63,8 +71,17 @@ public class Insights {
    *    the highest Bid if the Auction is active
    * @throws ArticleNotFoundException if the Article with the given Id does not exist
    */
-  public static Double getArticlePrice(Article Id) throws ArticleNotFoundException {
-    //TODO
+  public static Double getArticlePrice(Long id) throws ArticleNotFoundException {
+    Article article = articleManager.getArticleById(id);
+    if (article == null){
+      return null;
+    }
+    if (LocalDate.now().compareTo(article.getAuctionEndDate()) < 0){
+      return null;
+    }
+    if (article.getHammerPrice() > 0){
+      return article.getHammerPrice();
+    }
     if(true){
       throw new ArticleNotFoundException();
     } else return Double.POSITIVE_INFINITY;
@@ -87,6 +104,7 @@ public class Insights {
   public static List<Article> getTopArticles(int count){
     //TODO
     return new ArrayList<>();
+
   }
 
 }

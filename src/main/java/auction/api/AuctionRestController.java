@@ -6,6 +6,7 @@ import auction.domain.Bid;
 import auction.domain.Customer;
 import auction.dtos.ArticleDto;
 import auction.dtos.BidPostDto;
+import auction.dtos.CustomerDto;
 import auction.logic.ArticleNotFoundException;
 import auction.logic.AuctionLogic;
 import io.swagger.v3.oas.annotations.Operation;
@@ -69,6 +70,16 @@ public class AuctionRestController {
     return a;
   }
 
+  @PostMapping(value = "/articles")
+  public ResponseEntity addArticle(@RequestBody ArticleDto articleDto){
+    Article article = mapper.map(articleDto, Article.class);
+    if (logic.addArticle(article)){
+      articleDto.setId(article.getId());
+      return ResponseEntity.status(HttpStatus.CREATED).body(articleDto);
+    }
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed adding article");
+  }
+
   @PostMapping(value="/articles/{id}")
   @Operation(summary="Get article from database")
   public ResponseEntity placeBidOnArticle(@PathVariable Long id, @RequestBody BidPostDto bidDto, @RequestParam Long customerId) {
@@ -77,6 +88,16 @@ public class AuctionRestController {
       return ResponseEntity.ok("Bid successfully placed.");
     }
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data");
+  }
+
+  @PostMapping(value = "/customers")
+  public ResponseEntity addCustomer(@RequestBody CustomerDto customerDto){
+    Customer customer = mapper.map(customerDto, Customer.class);
+    if (logic.addCustomer(customer)){
+      customerDto.setId(customer.getId());
+      return ResponseEntity.status(HttpStatus.CREATED).body(customerDto);
+    }
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed adding customer");
   }
 
   @PostMapping(value="/login")

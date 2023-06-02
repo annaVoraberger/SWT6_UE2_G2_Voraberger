@@ -14,6 +14,7 @@ public interface AuctionLogic {
   List<Article> getArticlesByState(ArticleStatus status);
   Article getArticleById(Long id);
   boolean addArticle(Article article);
+  boolean addCustomer(Customer customer);
   boolean addBid(Bid bid, Long customerId, Long articleId);
   Bid getHighestBidOnArticle(Article article);
   boolean authenticateCustomer(String customerEmail);
